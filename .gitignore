@@ -1,0 +1,6 @@
+include
+lib
+local
+bin
+pip-selfcheck.json
+index.html
