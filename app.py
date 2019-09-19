@@ -4,10 +4,10 @@ import requests
 import sys
 
 def get_banner(snap_json):
-    return [s["url"] for s in snap_json["snap"]["media"] if s["type"] == "banner"][0]
+    return [s["url"] for s in snap_json["snap"]["media"] if s["type"] == "banner"]
 
 def get_icon(snap_json):
-    return [s["url"] for s in snap_json["snap"]["media"] if s["type"] == "icon"][0]
+    return [s["url"] for s in snap_json["snap"]["media"] if s["type"] == "icon"]
 
 def get_snap(snap_name):
     url = "https://api.snapcraft.io/v2/snaps/info/{snap_name}?fields=title,media".format(snap_name=snap_name)
@@ -18,10 +18,13 @@ def get_snap(snap_name):
 
     response_json = response.json()
 
+    icon = get_icon(response_json)
+    banner = get_banner(response_json)
+
     return {
         "name": response_json["name"],
-        "icon": get_icon(response_json),
-        "banner": get_banner(response_json)
+        "icon": icon[0] if icon else "",
+        "banner": banner[0] if banner else ""
     }
 
 
